@@ -28,27 +28,19 @@ typedef enum ReplacementAlgorithm {
 
 
 // Δομή Block
-typedef struct BF_Block {
-	Bool isDirty;
-	Bool isPinned;
-	
-	
-}BF_Block;
+typedef struct BF_Block BF_Block;
 
 /*
  * Η συνάρτηση BF_Block_Init αρχικοποιεί και δεσμεύει την κατάλληλη μνήμη
  * για την δομή BF_BLOCK.
  */
-void BF_Block_Init(BF_Block **block){
-	*block = (BF_Block*)malloc(BF_BLOCK_SIZE);
-};
+void BF_Block_Init(BF_Block **block);
 
 /*
  * Η συνάρτηση BF_Block_Destroy αποδεσμεύει την μνήμη που καταλαμβάνει
  * η δομή BF_BLOCK.
  */
 void BF_Block_Destroy(BF_Block **block);
-	
 
 /*
  * Η συνάρτηση BF_Block_SetDirty αλάζει την κατάσταση του block σε dirty.
@@ -57,9 +49,7 @@ void BF_Block_Destroy(BF_Block **block);
  * περίπτωση που απλός διαβάζουμε τα δεδομένα χωρίς να τα αλλάζουμε τότε
  * δεν χρειάζεται να καλέσουμε την συνάρτηση.
  */
-void BF_Block_SetDirty(BF_Block *block){
-	(*block).isDirty=True;
-};
+void BF_Block_SetDirty(BF_Block *block);
 
 /*
  * Η συνάρτηση BF_Βlock_GetData επιστρέφει ένα δείκτη στα δεδομένα του Block.
@@ -153,15 +143,7 @@ BF_ErrorCode BF_UnpinBlock(BF_Block *block);
  * υπάρξουν με την κλήση συναρτήσεων του επιπέδου αρχείου block. Εκτυπώνεται
  * στο stderr μια περιγραφή του πιο σφάλματος.
  */
-void BF_PrintError(BF_ErrorCode err){
-	if(err==BF_OPEN_FILES_LIMIT_ERROR){fprintf(stderr,"File limit exceeded.\n");}
-	else if(err==BF_INVALID_FILE_ERROR){fprintf(stderr,"File cannot be found.\n");}
-	else if(err==BF_ACTIVE_ERROR){fprintf(stderr,"Block already active.\n");}
-	else if(err==BF_FILE_ALREADY_EXISTS){fprintf(stderr,"File already exists.\n");}
-	else if(err==BF_FULL_MEMORY_ERROR){fprintf(stderr,"Memory is full.\n");}
-	else if(err==BF_INVALID_BLOCK_NUMBER_ERROR){fprintf(stderr,"Block number cannot be found.\n");}
-	else if(err==BF_AVAILABLE_PIN_BLOCKS_ERROR){fprintf(stderr,"File cannot close: There are are active blocks loaded.\n");}	
-};
+void BF_PrintError(BF_ErrorCode err);
 
 /*
  * Η συνάρτηση BF_Close κλήνει το επίπεδο Block γράφοντας στον δίσκο όποια
