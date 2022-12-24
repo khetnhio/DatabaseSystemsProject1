@@ -40,6 +40,10 @@ int main() {
     Record* rec = data;                         // Ο δείκτης rec δείχνει στην αρχή της περιοχής μνήμης data
     rec[0] = randomRecord();
     rec[1] = randomRecord();
+    rec[2] = randomRecord();
+    rec[3] = randomRecord();
+    rec[4] = randomRecord();
+    rec[5] = randomRecord();    
     BF_Block_SetDirty(block);
     CALL_OR_DIE(BF_UnpinBlock(block));
   }
@@ -64,7 +68,15 @@ int main() {
     Record* rec= data;
     printRecord(rec[0]);
     printf("\t");
-    printRecord(rec[1]);           
+    printRecord(rec[1]);
+    printf("\t");
+    printRecord(rec[2]); 
+    printf("\t");
+    printRecord(rec[3]); 
+    printf("\t");
+    printRecord(rec[4]);
+    printf("\t");
+    printRecord(rec[5]);                         
     CALL_OR_DIE(BF_UnpinBlock(block));
   }
 
