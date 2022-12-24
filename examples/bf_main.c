@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "bf.h"
 #include "record.h"
 
@@ -28,34 +29,31 @@ int main() {
   το αρχείο block_example.db για να δούμε τα περιεχόμενά του.
   */
   CALL_OR_DIE(BF_Init(LRU));
-  CALL_OR_DIE(BF_CreateFile("block_example1.db"))
-  CALL_OR_DIE(BF_OpenFile("block_example1.db", &fd1));
+  CALL_OR_DIE(BF_CreateFile("block_example.db"));
+  CALL_OR_DIE(BF_OpenFile("block_example.db", &fd1));
 
   void* data;
-  for (int i = 0; i < 1; ++i) {
+  for (int i = 0; i < 10; ++i) {
     CALL_OR_DIE(BF_AllocateBlock(fd1, block));  // Δημιουργία καινούριου block
+    //CALL_OR_DIE(BF_GetBlock(fd1,i,block));
     data = BF_Block_GetData(block);             // Τα περιεχόμενα του block στην ενδιάμεση μνήμη
     Record* rec = data;                         // Ο δείκτης rec δείχνει στην αρχή της περιοχής μνήμης data
     rec[0] = randomRecord();
     rec[1] = randomRecord();
-    /*rec[2] = randomRecord();
-    rec[3] = randomRecord();
-    rec[4] = randomRecord();
-    rec[5] = randomRecord();*/
     BF_Block_SetDirty(block);
     CALL_OR_DIE(BF_UnpinBlock(block));
-  } 
+  }
   CALL_OR_DIE(BF_CloseFile(fd1));               //Κλείσιμο αρχείου και αποδέσμευση μνήμης
   CALL_OR_DIE(BF_Close());
 
 
-
+  printf("what?\n");
 
   /* Δεύτερο Μέρος: χρήση της βιβλιοθήκης για block η οποία διαβάζει
   από κάθε block τα δύο πρώτα records.*/
 
   CALL_OR_DIE(BF_Init(LRU));
-  CALL_OR_DIE(BF_OpenFile("block_example1.db", &fd1));
+  CALL_OR_DIE(BF_OpenFile("block_example.db", &fd1));
   int blocks_num;
   CALL_OR_DIE(BF_GetBlockCounter(fd1, &blocks_num));
 
@@ -66,15 +64,7 @@ int main() {
     Record* rec= data;
     printRecord(rec[0]);
     printf("\t");
-    printRecord(rec[1]);
-    printf("\t");
-    printRecord(rec[2]);
-    printf("\t");
-    printRecord(rec[3]);
-    printf("\t");
-    printRecord(rec[4]);
-    printf("\t");
-    printRecord(rec[5]);   
+    printRecord(rec[1]);           
     CALL_OR_DIE(BF_UnpinBlock(block));
   }
 

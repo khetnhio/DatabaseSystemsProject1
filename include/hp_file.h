@@ -1,7 +1,6 @@
 #ifndef HP_FILE_H
 #define HP_FILE_H
 #include <record.h>
-#include <bf.h>
 
 /*Η δομή HP_block_info κρατάει μεταδεδομένα που σχετίζοντα με το block*/
 typedef struct {
@@ -16,17 +15,14 @@ typedef struct {
     int fileDesc;// the id of the heap file
     int lastBlock; //last block of heap
     int maxRecords;//records per block
-    // Να το συμπληρώσετε
 } HP_info;
 
 /*Η συνάρτηση HP_CreateFile χρησιμοποιείται για τη δημιουργία και
 κατάλληλη αρχικοποίηση ενός άδειου αρχείου σωρού με όνομα fileName.
 Σε περίπτωση που εκτελεστεί επιτυχώς, επιστρέφεται 0, ενώ σε
 διαφορετική περίπτωση -1.*/
-
-
-
-int HP_CreateFile(char *fileName /*όνομα αρχείου*/);
+int HP_CreateFile(
+    char *fileName /*όνομα αρχείου*/);
 
 /* Η συνάρτηση HP_OpenFile ανοίγει το αρχείο με όνομα filename και
 διαβάζει από το πρώτο μπλοκ την πληροφορία που αφορά το αρχείο σωρού.
@@ -35,6 +31,9 @@ int HP_CreateFile(char *fileName /*όνομα αρχείου*/);
 στη συνέχεια τις εγγραφές του.
 */
 HP_info* HP_OpenFile( char *fileName /* όνομα αρχείου */ );
+
+
+
 /* Η συνάρτηση HP_CloseFile κλείνει το αρχείο που προσδιορίζεται
 μέσα στη δομή header_info. Σε περίπτωση που εκτελεστεί επιτυχώς,
 επιστρέφεται 0, ενώ σε διαφορετική περίπτωση -1. Η συνάρτηση είναι

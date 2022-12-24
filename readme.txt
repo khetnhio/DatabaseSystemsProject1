@@ -10,3 +10,5 @@ make bf;
 Αντίστοιχα και για τα άλλα εκτελέσιμα.
 make ht;
 make hp;
+
+this is a readme file
