@@ -19,9 +19,21 @@
 
 int main() {
   BF_Init(LRU);
-
+  
   HT_CreateFile(FILE_NAME,10);
   HT_info* info = HT_OpenFile(FILE_NAME);
+  
+  
+  // HT_info *info;
+  // for (int i=0;i<59;i++){
+  //   info->hashTable[i][0]=i;
+  // }
+  //   for (int i=0;i<59;i++){
+  //   info->hashTable[i][1]=-1;
+  // }
+  // for (int i=0;i<59;i++){
+  //   printf("[%d, %d]\n",info->hashTable[i][0],info->hashTable[i][1]);
+  // }
 
   Record record;
   srand(12569874);
