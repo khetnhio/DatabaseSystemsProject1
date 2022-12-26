@@ -6,7 +6,7 @@
 #include "hp_file.h"
 
 #define RECORDS_NUM 1000 // you can change it if you want
-#define FILE_NAME "datawithpointers.db"
+#define FILE_NAME "data.db"
 
 #define CALL_OR_DIE(call)     \
   {                           \
@@ -35,7 +35,6 @@ int main() {
   printf("RUN PrintAllEntries\n");
   //int id = rand() % RECORDS_NUM;
   for (int id=0;id<RECORDS_NUM;id++){
-  //printf("looking for id No: %d\n",id);
   HP_GetAllEntries(info, id);
   }
   HP_CloseFile(info);
