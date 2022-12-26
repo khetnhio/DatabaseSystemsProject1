@@ -89,7 +89,7 @@ int HP_CloseFile( HP_info* hp_info ){
 //   memcpy(new_rec->city, old_rec->city, 20);
 // }
 
-int HP_InsertEntry(HP_info* hp_info, Record *record){
+int HP_InsertEntry(HP_info* hp_info, Record record){
     int fd = hp_info->fileDesc; // αναγνωριστικό αρχείου
     int blockId = hp_info->lastBlock; // id του τελευταίου block στην μνήμη
     void *data;
@@ -102,7 +102,7 @@ int HP_InsertEntry(HP_info* hp_info, Record *record){
       CALL_BF(BF_AllocateBlock(fd,block));
       data = BF_Block_GetData(block);
       Record *rec = data;
-      memcpy(rec,record,sizeof(Record));
+      memcpy(rec,&record,sizeof(Record));
       b_info = rec+6;
       b_info->recordsNo=1;
       BF_Block_SetDirty(block);
@@ -120,7 +120,7 @@ int HP_InsertEntry(HP_info* hp_info, Record *record){
       CALL_BF(BF_AllocateBlock(fd,block));//Δημιουργία καινούριου block
       data = BF_Block_GetData(block);
       Record *rec = data;
-      memcpy(rec,record,sizeof(Record));   
+      memcpy(rec,&record,sizeof(Record));   
       b_info = rec+6;
       b_info->recordsNo=1;  
       BF_Block_SetDirty(block);
@@ -131,7 +131,7 @@ int HP_InsertEntry(HP_info* hp_info, Record *record){
       Record *rec = data;
       int recNom=b_info->recordsNo;
       //printf("Insterting: (%d,%s,%s,%s)\n",record.id,record.name,record.surname,record.city);
-      memcpy(rec+recNom,record,sizeof(Record)); 
+      memcpy(rec+recNom,&record,sizeof(Record)); 
       b_info->recordsNo++;    
       BF_Block_SetDirty(block);
       CALL_BF(BF_UnpinBlock(block));
