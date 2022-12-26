@@ -22,21 +22,21 @@ int main() {
 
   HP_CreateFile(FILE_NAME);
   HP_info* info = HP_OpenFile(FILE_NAME);
-
+  printf("the size of HP_info is: %ld\n",sizeof(HP_info));
   Record record;
   srand(12569874);
   int r;
   printf("Insert Entries\n");
   for (int id = 0; id < RECORDS_NUM; ++id) {
     record = randomRecord();
-    HP_InsertEntry(info,&record);
+    HP_InsertEntry(info,record);
   }
 
   printf("RUN PrintAllEntries\n");
-  //int id = rand() % RECORDS_NUM;
-  for (int id=0;id<RECORDS_NUM;id++){
+  int id = rand() % RECORDS_NUM;
+  //for (int id=0;id<RECORDS_NUM;id++){
   HP_GetAllEntries(info, id);
-  }
+ // }
   HP_CloseFile(info);
   BF_Close();
 }
