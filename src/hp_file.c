@@ -90,6 +90,7 @@ int HP_CloseFile( HP_info* hp_info ){
 // }
 
 int HP_InsertEntry(HP_info* hp_info, Record record){
+  printf("&record=%p",&record);
     int fd = hp_info->fileDesc; // αναγνωριστικό αρχείου
     int blockId = hp_info->lastBlock; // id του τελευταίου block στην μνήμη
     void *data;
@@ -103,8 +104,9 @@ int HP_InsertEntry(HP_info* hp_info, Record record){
       data = BF_Block_GetData(block);
       Record *rec = data;
       memcpy(rec,&record,sizeof(Record));
-      b_info = rec+6;
+      b_info = (HP_block_info*)rec+6;
       b_info->recordsNo=1;
+      printf("Insterting 1: (%d,%s,%s,%s)\n",record.id,record.name,record.surname,record.city);
       BF_Block_SetDirty(block);
       CALL_BF(BF_UnpinBlock(block));
       return blockId;
@@ -112,7 +114,7 @@ int HP_InsertEntry(HP_info* hp_info, Record record){
     CALL_BF(BF_GetBlock(fd,blockId,block));// φορτώνω το τελευταίο block στην μνήμη
     data = BF_Block_GetData(block);
     Record *rec = data;
-    b_info =rec+6;    
+    b_info =(HP_block_info*)rec+6;    
     if ( (b_info->recordsNo) == (hp_info->maxRecords) ){ // περίπτωση που το τελευταίο block του σωρού είναι γεμάτο
       hp_info->lastBlock++;
       blockId++;      
@@ -121,8 +123,9 @@ int HP_InsertEntry(HP_info* hp_info, Record record){
       data = BF_Block_GetData(block);
       Record *rec = data;
       memcpy(rec,&record,sizeof(Record));   
-      b_info = rec+6;
-      b_info->recordsNo=1;  
+      b_info = (HP_block_info*)rec+6;
+      b_info->recordsNo=1;
+      printf("Insterting 2: (%d,%s,%s,%s)\n",record.id,record.name,record.surname,record.city);  
       BF_Block_SetDirty(block);
       CALL_BF(BF_UnpinBlock(block));
       return blockId;
@@ -130,7 +133,7 @@ int HP_InsertEntry(HP_info* hp_info, Record record){
     else if( (b_info->recordsNo) < (hp_info->maxRecords) ){// περίπτωση που η νέα καταχώριση χωράει στο τελευταίο block
       Record *rec = data;
       int recNom=b_info->recordsNo;
-      //printf("Insterting: (%d,%s,%s,%s)\n",record.id,record.name,record.surname,record.city);
+      printf("Insterting 3: (%d,%s,%s,%s)\n",record.id,record.name,record.surname,record.city);
       memcpy(rec+recNom,&record,sizeof(Record)); 
       b_info->recordsNo++;    
       BF_Block_SetDirty(block);
@@ -153,7 +156,7 @@ int HP_GetAllEntries(HP_info* hp_info, int value){
     blocksRead++;
     data = BF_Block_GetData(block);
     rec = data;
-    b_info = rec+6;
+    b_info = (HP_block_info*)rec+6;
     for(int j=0;j<b_info->recordsNo;j++){ //ελέγχω κάθε record του block για την τιμή value
       memcpy(&record,rec+j,sizeof(Record));
       if (record.id == value){
