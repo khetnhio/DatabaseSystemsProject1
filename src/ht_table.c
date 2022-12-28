@@ -111,7 +111,7 @@ int HT_InsertEntry(HT_info* ht_info, Record record){
     CALL_BF(BF_GetBlock(fd,blockId,block));// παίρνω το τελευταίο block του bucket
     data = BF_Block_GetData(block);
     Record *rec = data;
-    b_info =(HP_block_info*)rec+hp_info->maxRecords;
+    b_info =(HT_block_info*)rec+ht_info->maxRecords;
     if (b_info->recordsNum == ht_info->maxRecords){ // περίπτωση που το block είναι γεμάτο
       
     }

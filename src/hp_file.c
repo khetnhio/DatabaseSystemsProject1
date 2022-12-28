@@ -128,7 +128,6 @@ int HP_InsertEntry(HP_info* hp_info, Record record){
       return blockId;
     }      
     else if( (b_info->recordsNo) < (hp_info->maxRecords) ){// περίπτωση που η νέα καταχώριση χωράει στο τελευταίο block
-      Record *rec = data;
       int recNom=b_info->recordsNo;
       //printf("Insterting: (%d,%s,%s,%s)\n",record.id,record.name,record.surname,record.city);
       memcpy(rec+recNom,&record,sizeof(Record)); 
