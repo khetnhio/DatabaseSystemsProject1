@@ -11,13 +11,13 @@ typedef struct {
     Record_Attribute key; //κλειδί
     int fileDesc;        // αναγνωριστικό αρχείου
     int maxRecords;      // μέγιστος αριθμός εγγραφών που χωράνε σε ένα block
-    int hashTable[59][2];// o πίνακας κατακερματισμού
-} HT_info; // 59 buckets είναι το μέγιστο για να χωράει σε ένα block
+    int hashTable[119];// o πίνακας κατακερματισμού όπου hashTable[n-1] τελευταίο block n-οστου bucket
+} HT_info; // 119 buckets είναι το μέγιστο για να χωράει σε ένα block
 
 typedef struct {
     int recordsNum;// αριθμώς καταχωρημένων records στο block
-    int nextblock; // id του επόμενου block στο bucket
-    int prevblock; // id του προηγούμενου block στο bucket
+    int nextBlock; // id του επόμενου block στο bucket
+    int prevBlock; // id του προηγούμενου block στο bucket
 } HT_block_info;
 
 /*Η συνάρτηση HT_CreateFile χρησιμοποιείται για τη δημιουργία
