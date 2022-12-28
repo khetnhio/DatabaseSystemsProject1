@@ -5,8 +5,8 @@
 #include "bf.h"
 #include "hp_file.h"
 
-#define RECORDS_NUM 1000 // you can change it if you want
-#define FILE_NAME "data.db"
+#define RECORDS_NUM 2000 // you can change it if you want
+#define FILE_NAME "dataheap.db"
 
 #define CALL_OR_DIE(call)     \
   {                           \
@@ -22,14 +22,13 @@ int main() {
 
   HP_CreateFile(FILE_NAME);
   HP_info* info = HP_OpenFile(FILE_NAME);
-  printf("the size of HP_info is: %ld\n",sizeof(HP_info));
   Record record;
   srand(12569874);
   int r;
   printf("Insert Entries\n");
   for (int id = 0; id < RECORDS_NUM; ++id) {
     record = randomRecord();
-    HP_InsertEntry(info,record);
+    HP_InsertEntry(info,&record);
   }
 
   printf("RUN PrintAllEntries\n");
