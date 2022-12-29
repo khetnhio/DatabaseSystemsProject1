@@ -7,7 +7,7 @@
 
 #define RECORDS_NUM 1000 // you can change it if you want
 #define FILE_NAME "datahash.db"
-#define BUCKETS_NUM 10
+#define BUCKETS_NUM 50
 #define CALL_OR_DIE(call)     \
   {                           \
     BF_ErrorCode code = call; \
