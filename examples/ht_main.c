@@ -41,14 +41,14 @@ int main() {
   // }
   // printf("]\n");
 
-  // printf("RUN PrintAllEntries\n");
-  // int id = rand() % RECORDS_NUM;
-  // HT_GetAllEntries(info, &id);
-
   printf("RUN PrintAllEntries\n");
-  for (int id=0;id<RECORDS_NUM;id++){
-    HT_GetAllEntries(info, &id);
-  }
+  int id = rand() % RECORDS_NUM;
+  HT_GetAllEntries(info, &id);
+
+  // printf("RUN PrintAllEntries\n");
+  // for (int id=0;id<RECORDS_NUM;id++){
+  //   HT_GetAllEntries(info, &id);
+  // }
 
 
 
