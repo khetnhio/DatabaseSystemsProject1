@@ -22,8 +22,8 @@ int hashFunction (int key, int buckets){
   return key % buckets;                   
 }
 int HT_CreateFile(char *fileName,  int buckets){
-  if (buckets>119) {
-    printf("Maximum number of buckets exceeded for this implementation (119)\n");
+  if (buckets>50) {
+    printf("Maximum number of buckets exceeded for this implementation (50)\n");
     return HT_ERROR;
   }
   int fd;
@@ -174,7 +174,7 @@ int HT_GetAllEntries(HT_info* ht_info, void *value ){
       }
     }   
   }
-
+  CALL_BF(BF_UnpinBlock(block));
   return blocksRead;
 }
 

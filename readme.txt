@@ -12,3 +12,7 @@ make ht;
 make hp;
 
 this is a readme file
+
+Στην υλοποίηση της εργασίας έχω αλλάξει τις συναρτήσεις HP_Insert_Entries και HT_GetAllEntries
+να δέχονται record pointer αντί για σκέτο record, διότι διαφορετικά αντιμετώπιζα κάποια bugs
+στην καταγραφή των records στο αρχείο.

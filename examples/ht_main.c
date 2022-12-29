@@ -5,9 +5,9 @@
 #include "bf.h"
 #include "ht_table.h"
 
-#define RECORDS_NUM 1000 // you can change it if you want
+#define RECORDS_NUM 2000 // you can change it if you want
 #define FILE_NAME "datahash.db"
-#define BUCKETS_NUM 50
+#define BUCKETS_NUM 40
 #define CALL_OR_DIE(call)     \
   {                           \
     BF_ErrorCode code = call; \
@@ -41,9 +41,15 @@ int main() {
   // }
   // printf("]\n");
 
+  // printf("RUN PrintAllEntries\n");
+  // int id = rand() % RECORDS_NUM;
+  // HT_GetAllEntries(info, &id);
+
   printf("RUN PrintAllEntries\n");
-  int id = rand() % RECORDS_NUM;
-  HT_GetAllEntries(info, &id);
+  for (int id=0;id<RECORDS_NUM;id++){
+    HT_GetAllEntries(info, &id);
+  }
+
 
 
   HT_CloseFile(info);
