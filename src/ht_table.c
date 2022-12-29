@@ -16,9 +16,10 @@
     return HT_ERROR;        \
   }                         \
 }
-
-int hashFunction (int key, int buckets){ // δεχεται το id και τον αριθμό των buckets
-  return key % buckets; // επιστρέφει αριθμό απο 0 εώς buckets-1
+// δεχεται το id και τον αριθμό των buckets
+// και επιστρέφει αριθμό απο 0 εώς buckets-1
+int hashFunction (int key, int buckets){  
+  return key % buckets;                   
 }
 int HT_CreateFile(char *fileName,  int buckets){
   if (buckets>119) {
@@ -120,9 +121,8 @@ int HT_InsertEntry(HT_info* ht_info, Record* record){
       data = BF_Block_GetData(block);
       rec = data;
       memcpy(rec,record,sizeof(Record));
-      b_info=(HT_block_info*)rec+(ht_info->maxRecords);
+      b_info=(HT_block_info*)(rec+(ht_info->maxRecords));
       b_info->recordsNum=1;
-      printf("block id is: %d\n",blockId);
       b_info->prevBlock = blockId;
       CALL_BF(BF_UnpinBlock(block));
       return newBlockId;
@@ -140,15 +140,12 @@ int HT_InsertEntry(HT_info* ht_info, Record* record){
 
 int HT_GetAllEntries(HT_info* ht_info, void *value ){
   int *val = value;
-  printf("looking for id No: %d\n",*val);
   int bkt = hashFunction(*val,ht_info->bucketsNum);
-  printf("the record will be in bucket No: %d\n",bkt);
   int fd = ht_info->fileDesc;
   int blocksRead=0; // ο αρθμός των block που θα διαβαστεί
   BF_Block *block;
   BF_Block_Init(&block);
   int blockId=ht_info->hashTable[bkt];
-  printf("Reading Block No: %d\n",blockId);
   CALL_BF(BF_GetBlock(fd,blockId,block));// φορτώνεται το τελευταίο block του bucket
   blocksRead++;
   void *data = BF_Block_GetData(block);
@@ -162,11 +159,9 @@ int HT_GetAllEntries(HT_info* ht_info, void *value ){
     printRecord(record);
       }
   }
-  printf("blocks read so far: %d\n",blocksRead);
-  printf("The previous block is: %d\n",b_info->prevBlock);
+
   while (b_info->prevBlock !=0){ // ελέγχονται και τα block υπερχείλισης για το id
     CALL_BF(BF_UnpinBlock(block));
-    printf("checking previous block in bucket:\n");
     CALL_BF(BF_GetBlock(fd,b_info->prevBlock,block));
     blocksRead++;
     data = BF_Block_GetData(block);

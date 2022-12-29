@@ -5,7 +5,7 @@
 #include "bf.h"
 #include "ht_table.h"
 
-#define RECORDS_NUM 100 // you can change it if you want
+#define RECORDS_NUM 1000 // you can change it if you want
 #define FILE_NAME "datahash.db"
 #define BUCKETS_NUM 10
 #define CALL_OR_DIE(call)     \
@@ -34,12 +34,12 @@ int main() {
   }
 
 
-  printf("this is the final hash table:\n");
-  printf("[%d ",info->hashTable[0]);
-  for (int i=1;i<BUCKETS_NUM;i++){
-    printf(",%d ",info->hashTable[i]);
-  }
-  printf("]\n");
+  // printf("this is the final hash table:\n");
+  // printf("[%d ",info->hashTable[0]);
+  // for (int i=1;i<BUCKETS_NUM;i++){
+  //   printf(",%d ",info->hashTable[i]);
+  // }
+  // printf("]\n");
 
   printf("RUN PrintAllEntries\n");
   int id = rand() % RECORDS_NUM;
