@@ -6,13 +6,13 @@
 
 
 typedef struct {
-    char filetype[15];   // τύπος αρχείου
-    long int bucketsNum;    // αριθμός των buckets
-    Record_Attribute key; //κλειδί
-    int fileDesc;        // αναγνωριστικό αρχείου
-    int maxRecords;      // μέγιστος αριθμός εγγραφών που χωράνε σε ένα block
-    int hashTable[119];// o πίνακας κατακερματισμού όπου hashTable[n-1] τελευταίο block n-οστου bucket
-} HT_info; // 119 buckets είναι το μέγιστο για να χωράει σε ένα block
+    char filetype[15];      // τύπος αρχείου
+    int bucketsNum;    // αριθμός των buckets
+    Record_Attribute key;   // κλειδί
+    int fileDesc;           // αναγνωριστικό αρχείου
+    int maxRecords;         // μέγιστος αριθμός εγγραφών που χωράνε σε ένα block
+    int hashTable[119];     // o πίνακας κατακερματισμού όπου hashTable[n-1] τελευταίο block n-οστου bucket
+} HT_info;                  // 119 buckets είναι το μέγιστο για να χωράει σε ένα block
 
 typedef struct {
     int recordsNum;// αριθμώς καταχωρημένων records στο block
@@ -54,7 +54,7 @@ int HT_CloseFile(HT_info* header_info );
 Σε περίπτωση που εκτελεστεί επιτυχώς, επιστρέφετε τον αριθμό του block στο οποίο
 έγινε η εισαγωγή (blockId) , ενώ σε διαφορετική περίπτωση -1.*/
 int HT_InsertEntry(HT_info* header_info, /*επικεφαλίδα του αρχείου*/
-    Record record /*δομή που προσδιορίζει την εγγραφή*/);
+    Record* record /*δομή που προσδιορίζει την εγγραφή*/);
 
 /* Η συνάρτηση αυτή χρησιμοποιείται για την εκτύπωση όλων των εγγραφών που υπάρχουν
 στο αρχείο κατακερματισμού οι οποίες έχουν τιμή στο πεδίο-κλειδί ίση με value.

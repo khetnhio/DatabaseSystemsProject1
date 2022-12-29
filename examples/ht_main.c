@@ -5,9 +5,9 @@
 #include "bf.h"
 #include "ht_table.h"
 
-#define RECORDS_NUM 200 // you can change it if you want
-#define FILE_NAME "dataheap.db"
-
+#define RECORDS_NUM 100 // you can change it if you want
+#define FILE_NAME "datahash.db"
+#define BUCKETS_NUM 10
 #define CALL_OR_DIE(call)     \
   {                           \
     BF_ErrorCode code = call; \
@@ -18,39 +18,34 @@
   }
 
 int main() {
-//   BF_Init(LRU);
+
+  BF_Init(LRU);
   
-//   HT_CreateFile(FILE_NAME,10);
-//   HT_info* info = HT_OpenFile(FILE_NAME);
-  
-//   printf("this is the hash table:\n");
-//   for (int i=0;i<10;i++){
-//     printf("[%d, %d]\n",info->hashTable[i][0],info->hashTable[i][1]);
-//   }
+  HT_CreateFile(FILE_NAME,BUCKETS_NUM);
+  HT_info* info = HT_OpenFile(FILE_NAME);
 
-//   // Record record;
-//   // srand(12569874);
-//   // int r;
-//   // printf("Insert Entries\n");
-//   // for (int id = 0; id < RECORDS_NUM; ++id) {
-//   //   record = randomRecord();
-//   //   HT_InsertEntry(info, record);
-//   // }
+  Record record;
+  srand(12569874);
+  int r;
+  printf("Insert Entries\n");
+  for (int id = 0; id < RECORDS_NUM; ++id) {
+    record = randomRecord();
+    HT_InsertEntry(info, &record);
+  }
 
 
-//   printf("this is the hash table:\n");
-//   for (int i=0;i<10;i++){
-//     printf("[%d, %d]\n",info->hashTable[i][0],info->hashTable[i][1]);
-//   }
+  printf("this is the final hash table:\n");
+  printf("[%d ",info->hashTable[0]);
+  for (int i=1;i<BUCKETS_NUM;i++){
+    printf(",%d ",info->hashTable[i]);
+  }
+  printf("]\n");
 
-//   // printf("RUN PrintAllEntries\n");
-//   // int id = rand() % RECORDS_NUM;
-//   // HT_GetAllEntries(info, &id);
+  printf("RUN PrintAllEntries\n");
+  int id = rand() % RECORDS_NUM;
+  HT_GetAllEntries(info, &id);
 
-printf("size of HT_info: %ld\n",sizeof(HT_info));
-printf("max records: %ld\n",BF_BLOCK_SIZE/sizeof(Record));
 
-//   HT_CloseFile(info);
-//   BF_Close();
-//   printf("everything worked great\n");
+  HT_CloseFile(info);
+  BF_Close();
 }

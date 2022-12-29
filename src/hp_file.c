@@ -122,7 +122,7 @@ int HP_InsertEntry(HP_info* hp_info, Record* record){
       Record *rec = data;
       memcpy(rec,record,sizeof(Record));   
       b_info = (HP_block_info*)rec+hp_info->maxRecords;
-      b_info->recordsNo=1;  
+      b_info->recordsNo=1;
       BF_Block_SetDirty(block);
       CALL_BF(BF_UnpinBlock(block));
       return blockId;
