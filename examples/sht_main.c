@@ -19,21 +19,6 @@
     }                         \
   }
 
-int secondHashFunction (char *name,int buckets){
-  char *namePtr = name;
-  char letter;
-  int sum = 0;
-  memcpy(&letter,namePtr,sizeof(char));
-  while (letter != '\0') {
-    printf("letter =%d\n",letter);
-    sum += (letter)*(letter)*0.938181;
-    namePtr++;
-    memcpy(&letter,namePtr,sizeof(char));
-  }
-  printf("The sum is: %d\n",sum);
-  return sum % buckets;
-}
-
 int main() {
     srand(12569874);
     BF_Init(LRU);
@@ -53,52 +38,17 @@ int main() {
     for (int id = 0; id < RECORDS_NUM; ++id) {
         record = randomRecord();
         int block_id = HT_InsertEntry(info, &record);
-        SHT_SecondaryInsertEntry(index_info, &record, block_id);
+        //printf("insert entries worked on HT\n");
+        SHT_SecondaryInsertEntry(index_info, &record, id);
     }
-    // Τυπώνουμε όλες τις εγγραφές με όνομα searchName
-    printf("RUN PrintAllEntries for name %s\n",searchName);
-    SHT_SecondaryGetAllEntries(info,index_info,searchName);
+    // // Τυπώνουμε όλες τις εγγραφές με όνομα searchName
+    // printf("RUN PrintAllEntries for name %s\n",searchName);
+    // SHT_SecondaryGetAllEntries(info,index_info,searchName);
 
     // Κλείνουμε το αρχείο κατακερματισμού και το δευτερεύον ευρετήριο
     SHT_CloseSecondaryIndex(index_info);
     HT_CloseFile(info);
-    //
+    
     BF_Close();
 
-//   // hash function testing  
-//   char names[][15] ={  "Yannis",
-//   "Christofos",
-//   "Sofia",
-//   "Marianna",
-//   "Vagelis",
-//   "Maria",
-//   "Iosif",
-//   "Dionisis",
-//   "Konstantina",
-//   "Theofilos",
-//   "Giorgos",
-//   "Dimitris"};
-//   int bktcap[BUCKETS_NUM];
-//   for (int i=0;i<BUCKETS_NUM;i++){
-//     bktcap[i]=0;
-//   }
-//   char name[15];
-//   int bkt;
-//   for (int i=0;i<BUCKETS_NUM;i++){
-//     //name = &names[0][i];
-//     memcpy(name,&names[i][0],15);
-//     printf("checking name: %s\n",name);
-//     bkt = secondHashFunction(name,BUCKETS_NUM);
-//     bktcap[bkt]++;
-//   }
-//   for(int i=0;i<BUCKETS_NUM;i++){
-//     printf("The bucket No: %d, has %d names.\n",i,bktcap[i]);
-//   }
-//   int eval=0;
-//   for (int i=0;i<BUCKETS_NUM;i++){
-//     if (bktcap[i]==0){
-//       eval--;
-//     }
-//   }
-//   printf("Hash function eval:%d\n",eval);
 }

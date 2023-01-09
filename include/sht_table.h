@@ -13,17 +13,18 @@ typedef struct {
     int fileDesc;
     int maxRecords;
     int hashTable[12];
+    //char primaryFileName[25];
 } SHT_info;
 
 typedef struct {
     int recordsNum;
-    int prevblock;
+    int prevBlock;
 } SHT_block_info;
 
-typedef shtRecord{ // πλειάδες που θα υπάρχουν στο ενδίαμεσο επίπεδο block
+typedef struct { // πλειάδες που θα υπάρχουν στο ενδίαμεσο επίπεδο block
     char name[15];
     int blockid;
-}
+}shtRecord;
 
 /*Η συνάρτηση SHT_CreateSecondaryIndex χρησιμοποιείται για τη δημιουργία
 και κατάλληλη αρχικοποίηση ενός αρχείου δευτερεύοντος κατακερματισμού με
