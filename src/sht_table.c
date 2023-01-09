@@ -31,7 +31,7 @@ int SHT_CloseSecondaryIndex( SHT_info* SHT_info ){
 
 }
 
-int SHT_SecondaryInsertEntry(SHT_info* sht_info, Record record, int block_id){
+int SHT_SecondaryInsertEntry(SHT_info* sht_info, Record *record, int block_id){
 
 }
 
