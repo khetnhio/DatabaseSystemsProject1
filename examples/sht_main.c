@@ -9,7 +9,7 @@
 #define RECORDS_NUM 30 // you can change it if you want
 #define FILE_NAME "data.db"
 #define INDEX_NAME "index.db"
-#define BUCKETS 12
+#define BUCKETS_NUM 12
 #define CALL_OR_DIE(call)     \
   {                           \
     BF_ErrorCode code = call; \
@@ -38,8 +38,8 @@ int main() {
     srand(12569874);
     BF_Init(LRU);
     // Αρχικοποιήσεις
-    HT_CreateFile(FILE_NAME,BUCKETS);
-    SHT_CreateSecondaryIndex(INDEX_NAME,BUCKETS,FILE_NAME);
+    HT_CreateFile(FILE_NAME,BUCKETS_NUM);
+    SHT_CreateSecondaryIndex(INDEX_NAME,BUCKETS_NUM,FILE_NAME);
     HT_info* info = HT_OpenFile(FILE_NAME);
     SHT_info* index_info = SHT_OpenSecondaryIndex(INDEX_NAME);
 
@@ -78,24 +78,24 @@ int main() {
 //   "Theofilos",
 //   "Giorgos",
 //   "Dimitris"};
-//   int bktcap[BUCKETS];
-//   for (int i=0;i<BUCKETS;i++){
+//   int bktcap[BUCKETS_NUM];
+//   for (int i=0;i<BUCKETS_NUM;i++){
 //     bktcap[i]=0;
 //   }
 //   char name[15];
 //   int bkt;
-//   for (int i=0;i<BUCKETS;i++){
+//   for (int i=0;i<BUCKETS_NUM;i++){
 //     //name = &names[0][i];
 //     memcpy(name,&names[i][0],15);
 //     printf("checking name: %s\n",name);
-//     bkt = secondHashFunction(name,BUCKETS);
+//     bkt = secondHashFunction(name,BUCKETS_NUM);
 //     bktcap[bkt]++;
 //   }
-//   for(int i=0;i<BUCKETS;i++){
+//   for(int i=0;i<BUCKETS_NUM;i++){
 //     printf("The bucket No: %d, has %d names.\n",i,bktcap[i]);
 //   }
 //   int eval=0;
-//   for (int i=0;i<BUCKETS;i++){
+//   for (int i=0;i<BUCKETS_NUM;i++){
 //     if (bktcap[i]==0){
 //       eval--;
 //     }

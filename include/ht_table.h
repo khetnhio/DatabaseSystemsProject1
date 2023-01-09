@@ -15,7 +15,7 @@ typedef struct {
 } HT_info;                  // όριο 50 buckets για να χωράει σε ένα block
 
 typedef struct {
-    int recordsNum;// αριθμώς καταχωρημένων records στο block
+    int recordsNum;// αριθμός καταχωρημένων records στο block
     int nextBlock; // id του επόμενου block στο bucket
     int prevBlock; // id του προηγούμενου block στο bucket
 } HT_block_info;
