@@ -40,6 +40,7 @@ int main() {
         int block_id = HT_InsertEntry(info, &record);
         //printf("insert entries worked on HT\n");
         SHT_SecondaryInsertEntry(index_info, &record, id);
+        printf("%d, ",id);
     }
     // // Τυπώνουμε όλες τις εγγραφές με όνομα searchName
     // printf("RUN PrintAllEntries for name %s\n",searchName);

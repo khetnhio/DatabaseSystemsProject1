@@ -31,12 +31,12 @@ int sHashFunction (char *name,int buckets){
   int sum = 0;
   memcpy(&letter,namePtr,sizeof(char));
   while (letter != '\0') {
-    printf("letter =%d\n",letter);
+    //printf("letter =%d\n",letter);
     sum += (letter)*(letter)*0.938181;
     namePtr++;
     memcpy(&letter,namePtr,sizeof(char));
   }
-  printf("The sum is: %d\n",sum);
+  //printf("The sum is: %d\n",sum);
   return sum % buckets;
 }
 
@@ -60,7 +60,7 @@ int SHT_CreateSecondaryIndex(char *sfileName,  int buckets, char* fileName){
   info->key=NAME;
   info->maxRecords=BF_BLOCK_SIZE/sizeof(shtRecord);
   //memcpy(info->primaryFileName,fileName,25);
-  printf("The block id for the SHT metadata is:%d\n",blockId);
+  //printf("The block id for the SHT metadata is:%d\n",blockId);
   for (int i=0;i<buckets;i++){ //αρχικοποίηση του πίνακα κατακερματισμού για το δευτερεύον ευρετήριο
     info->hashTable[i]=0; // οταν η τιμή είναι μηδέν, δεν υπάρχει κανένα block στον κάδο
   }
@@ -106,9 +106,9 @@ int SHT_CloseSecondaryIndex( SHT_info* SHT_info ){
 }
 
 int SHT_SecondaryInsertEntry(SHT_info* sht_info, Record *record, int block_id){
-  shtRecord *shtRec;  // η πλειάδα που θα μπεί στο block
+  shtRecord *shtRec = (shtRecord*)malloc(sizeof(shtRecord));  // η πλειάδα που θα μπεί στο block
   shtRec->blockid=block_id; 
-  memcpy(shtRec,record->name,15);
+  memcpy(shtRec->name,record->name,15);
   int fd= sht_info->fileDesc;
   int bkt = sHashFunction(record->name,sht_info->bucketsNum); // ο κάδος που πρέπει να γίνει η καταχώρηση
   int blockId = sht_info->hashTable[bkt]; // id του τελευταίου block στον κάδο
@@ -116,7 +116,6 @@ int SHT_SecondaryInsertEntry(SHT_info* sht_info, Record *record, int block_id){
   BF_Block *block;
   BF_Block_Init(&block);
   SHT_block_info *b_info;
-  printf("so far so good 1'n");
   if (blockId==0){ // περίπτωση που ο κάδος είναι άδειος
     CALL_BF(BF_AllocateBlock(fd,block)); // δημιουργία νέου block
     CALL_BF(BF_GetBlockCounter(fd,&blockId));
@@ -124,7 +123,6 @@ int SHT_SecondaryInsertEntry(SHT_info* sht_info, Record *record, int block_id){
     sht_info->hashTable[bkt]=blockId;
     data = BF_Block_GetData(block);
     shtRecord *rec =data;
-    printf("so far so good 2\n");
     memcpy(rec,shtRec,sizeof(shtRecord));
     b_info = (SHT_block_info*)(rec+(sht_info->maxRecords));
     b_info->recordsNum=1;
